@@ -1,0 +1,23 @@
+variables:
+  DOCKER_DRIVER: overlay
+
+stages:
+  - test
+  - build
+  - run
+
+build:
+  image: docker:1.11
+  services:
+   - docker:dind
+  tags:
+    - docker
+  stage: build
+  only:
+    - master
+  cache:
+    untracked: true
+  script:
+    - docker build -t "$CI_PROJECT_PATH:latest" .
+    - docker login -u "$DOCKER_USER" -p "$DOCKER_PASSWORD"
+    - docker push "$CI_PROJECT_PATH:latest"
