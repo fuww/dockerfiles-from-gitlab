@@ -15,8 +15,6 @@ build:
   stage: build
   only:
     - master
-  cache:
-    untracked: true
   script:
     - docker build -t "$CI_PROJECT_PATH:latest" .
     - docker login -u "$DOCKER_USER" -p "$DOCKER_PASSWORD"
