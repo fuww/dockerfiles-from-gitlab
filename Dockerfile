@@ -1,8 +1,8 @@
 FROM alpine:latest
 MAINTAINER Joost van der Laan
 
-RUN echo "http://dl-cdn.alpinelinux.org/alpine/v3.5/community" \
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/v3.6/community" \
     >> /etc/apk/repositories && \
-  apk --no-cache add 'hugo<0.30' py-pip git openssh-client && \
+  apk --no-cache add 'hugo=0.20.7-r0' py-pip git openssh-client && \
   pip install --upgrade pip && \
   pip install s3cmd

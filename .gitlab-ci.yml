@@ -27,6 +27,8 @@ build-test:
   tags:
     - docker
   stage: build
+  except:
+    - master
   script:
     - docker build -t "$CI_PROJECT_PATH:latest" .
     - docker login -u "$DOCKER_USER" -p "$DOCKER_PASSWORD"
