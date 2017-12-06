@@ -19,3 +19,14 @@ build:
     - docker build -t "$CI_PROJECT_PATH:latest" .
     - docker login -u "$DOCKER_USER" -p "$DOCKER_PASSWORD"
     - docker push "$CI_PROJECT_PATH:latest"
+
+build-test:
+  image: docker:1.11
+  services:
+   - docker:dind
+  tags:
+    - docker
+  stage: build
+  script:
+    - docker build -t "$CI_PROJECT_PATH:latest" .
+    - docker login -u "$DOCKER_USER" -p "$DOCKER_PASSWORD"
