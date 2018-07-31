@@ -27,11 +27,10 @@ services:
 before_script:
   - docker info
 
-tags:
-  - docker
-
 build:
   stage: build
+  tags:
+    - docker
   only:
     - master
   script:
@@ -41,6 +40,8 @@ build:
 
 build-test:
   stage: build
+  tags:
+    - docker
   except:
     - master
   script:
