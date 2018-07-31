@@ -27,9 +27,10 @@ services:
 before_script:
   - docker info
 
+tags:
+  - docker
+
 build:
-  tags:
-    - docker
   stage: build
   only:
     - master
@@ -39,8 +40,6 @@ build:
     - docker push "$CI_PROJECT_PATH:latest"
 
 build-test:
-  tags:
-    - docker
   stage: build
   except:
     - master
