@@ -19,9 +19,6 @@ RUN apt-get install elixir -y
 
 
 
-
-
-
 # # buildpack-deps/stretch/curl/Dockerfile
 # RUN apt-get update && apt-get install -y --no-install-recommends \
 # 		ca-certificates \
