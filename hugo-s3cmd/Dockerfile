@@ -8,6 +8,7 @@ RUN tar -zxvf hugo.tar.gz
 
 # ENV HUGO_VERSION 0.39-r0
 
+
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/v3.8/community" \
     >> /etc/apk/repositories && \
   apk --no-cache add py-pip git openssh-client && \
