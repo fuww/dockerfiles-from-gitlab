@@ -1,0 +1,5 @@
+steps:
+- name: 'eu.gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/kubernetes-164514/cloudshell-elixir:$COMMIT_SHA', 'cloudshell-elixir']
+- name: 'eu.gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/kubernetes-164514/docker-terraform:$COMMIT_SHA', 'docker-terraform']
