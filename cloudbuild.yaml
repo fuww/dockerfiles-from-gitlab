@@ -1,7 +1,7 @@
 steps:
 - name: 'eu.gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'eu.gcr.io/kubernetes-164514/cloudshell-elixir:$COMMIT_SHA', 'cloudshell-elixir']
-images: ['eu.gcr.io/kubernetes-164514/cloudshell-elixir:latest']
+images: 'eu.gcr.io/kubernetes-164514/cloudshell-elixir:latest'
   - name: 'eu.gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'eu.gcr.io/kubernetes-164514/docker-terraform:$COMMIT_SHA', 'docker-terraform']
 images: [['eu.gcr.io/kubernetes-164514/terraform:latest'], ['eu.gcr.io/kubernetes-164514/terraform:$COMMIT_SHA'] ]
