@@ -8,6 +8,7 @@ RUN set -eux; \
         apk add --no-cache --virtual .fetch-deps \
 		    ca-certificates \
             py-pip bash libpng-dev lcms2-dev alpine-sdk nasm autoconf automake git openssh \
+            make gcc g++ \
 		    openssl; \
             pip install --upgrade pip && \
             pip install s3cmd && \
@@ -18,3 +19,4 @@ RUN set -eux; \
             apk del .fetch-deps; \
             rm -rf ~/.cache \
             hugo version
+RUN npm install -g firebase-tools
