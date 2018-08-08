@@ -13,3 +13,7 @@ images: [['eu.gcr.io/kubernetes-164514/hugo:latest'], ['eu.gcr.io/kubernetes-164
   args: ['build', '-t', 'eu.gcr.io/kubernetes-164514/hugo:$COMMIT_SHA', 'hugo']
   dir: 'hugo/v0.39'
 images: ['eu.gcr.io/kubernetes-164514/hugo:v0.39']
+- name: 'eu.gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'eu.gcr.io/kubernetes-164514/firebase:$COMMIT_SHA', 'firebase']
+  dir: 'firebase'
+images: [['eu.gcr.io/kubernetes-164514/firebase:latest'], ['eu.gcr.io/kubernetes-164514/firebase:$COMMIT_SHA'] ]
