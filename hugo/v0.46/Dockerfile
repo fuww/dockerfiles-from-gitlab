@@ -5,9 +5,10 @@ ENV HUGO_SHA 96c431b1b76aed4833739966235098162b97ca9933e1ff2bcd09f7571842ea6b
 
 RUN set -eux; \
         apk update; \
-        apk add --no-cache --virtual .fetch-deps \
+        apk add --no-cache bash \
+	apk add --no-cache --virtual .fetch-deps \
 		    ca-certificates \
-            py-pip bash libpng-dev lcms2-dev alpine-sdk nasm autoconf automake git openssh \
+            py-pip libpng-dev lcms2-dev alpine-sdk nasm autoconf automake git openssh \
             alpine-sdk \
 		    openssl; \
             pip install --upgrade pip && \
