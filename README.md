@@ -1,2 +1,2 @@
-# docker-terraform
-Docker image for running terraform in an automated fashion on GitLab CI
+# Dockerfiles for FashionUnited
+Collection of custom dockerfiles used for builds & running apps in production.
