@@ -1,0 +1,31 @@
+# https://docs.gitlab.com/ee/ci/yaml/README.html#git-submodule-strategy
+.retry: &retry
+  retry:
+    max: 2
+    when:
+      - unknown_failure
+      - api_failure
+      - runner_system_failure
+      - missing_dependency_failure
+      - runner_unsupported
+
+variables:
+  DOCKER_DRIVER: overlay2
+  GIT_SUBMODULE_STRATEGY: none # recursive
+  TEST_DIR: "dockerfiles/hugo/v0.74.3-extended"
+
+# test local: gitlab-runner exec docker build-kaniko-hugo
+build-kaniko-hugo:
+  stage: build
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  script:
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    # - export # only for debugging. Insecure!
+    # - echo $CI_REGISTRY
+    # - less /kaniko/.docker/config.json
+    - /kaniko/executor --context $CI_PROJECT_DIR$TEST_DIR --dockerfile $CI_PROJECT_DIR/hugo/v0.74.3-extended/Dockerfile --destination $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
+  only:
+    - tags
