@@ -1,39 +1,19 @@
-# https://docs.gitlab.com/ee/user/packages/container_registry/#authenticating-to-the-container-registry-with-gitlab-cicd
-# https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#using-docker-caching
+jscpd-build-for-gitlab-project-registry:
+  variables:
+    TEST_DIR: "/jscpd"
+  extends: .build_with_kaniko
+  environment:
+    #This is only here for completeness, since there are no CI CD Variables with this scope, the project defaults are used
+    # to push to this projects docker registry
+    name: push-to-gitlab-project-registry
 
-image: docker:19.03.12
-
-services:
-  - docker:19.03.12-dind
-
-variables:
-  CI_REGISTRY_IMAGE: registry.gitlab.com/fuww/landing/jscpd
-  CI_REGISTRY: registry.gitlab.com
-  CI_REGISTRY_IMAGE2: fuww/jscpd
-  CI_REGISTRY2: docker.io
-  # DOCKER_DRIVER: overlay2
-  TEST_DIR: "dockerfiles/jscpd"
-  DOCKER_HOST: tcp://docker:2376
-  DOCKER_TLS_CERTDIR: "/certs"
-
-before_script:
-  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-  - docker login -u "$DOCKER_USER" -p "$DOCKER_PASSWORD"
-  - docker info
-
-build-dockerimage-jscpd:
-  stage: test
-  allow_failure: true
-  script:
-    - docker pull ${CI_REGISTRY_IMAGE}:latest || true
-    - docker build --cache-from ${CI_REGISTRY_IMAGE}:latest --tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}
-      --tag ${CI_REGISTRY_IMAGE}:latest --tag ${CI_REGISTRY_IMAGE}2:latest ${TEST_DIR}
-    - docker build --cache-from ${CI_REGISTRY_IMAGE}:latest --tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}
-      --tag ${CI_REGISTRY_IMAGE}:latest --tag ${CI_REGISTRY_IMAGE}2:latest . # for testing local. Run gitlab-runner exec docker build-dockerimage-jscpd
-    - docker push ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}
-    - docker push ${CI_REGISTRY_IMAGE}:latest
-    - docker push ${CI_REGISTRY_IMAGE2}:${CI_COMMIT_SHA}
-    - docker push ${CI_REGISTRY_IMAGE2}:latest
-  only:
-    changes:
-      - dockerfiles/**/*
+jscpd-build-for-docker-hub-registry_new:
+  variables:
+    TEST_DIR: "/jscpd"
+  extends: .build_with_kaniko
+  stage: build
+  #This causes CI CD Variables to be taken from GitLab Project definition for variable scope "push-to-docker-hub",
+  # which overrides CI_REGISTRY, CI_REGISTRY_IMAGE, CI_REGISTRY_USER and CI_REGISTRY_PASSWORD
+  # these variables with this scope would need to be created if you copy this project to another group or instance
+  environment:
+    name: push-to-docker-hub
