@@ -1,10 +1,10 @@
 # https://docs.gitlab.com/ee/user/packages/container_registry/#authenticating-to-the-container-registry-with-gitlab-cicd
 # https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#using-docker-caching
 
-image: docker:19.03.12
+image: docker:24.0.4
 
 services:
-  - docker:19.03.12-dind
+  - docker:24.0.4-dind
 
 variables:
   CI_REGISTRY_IMAGE: registry.gitlab.com/fuww/landing/jscpd
