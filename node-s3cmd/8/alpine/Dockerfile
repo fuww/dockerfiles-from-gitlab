@@ -1,4 +1,4 @@
-FROM node:8-alpine
+FROM node:20-alpine
 
 RUN apk add --no-cache \
     hugo py-pip bash libpng-dev lcms2-dev alpine-sdk nasm autoconf automake git openssh && \
